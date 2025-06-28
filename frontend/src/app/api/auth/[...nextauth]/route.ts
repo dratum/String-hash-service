@@ -9,9 +9,9 @@ const YandexProvider: OAuthConfig<YandexProfile> = {
   type: 'oauth',
   authorization: {
     url: 'https://oauth.yandex.ru/authorize',
-    params: { 
+    params: {
       scope: 'login:email login:info',
-      response_type: 'code'
+      response_type: 'code',
     },
   },
   token: 'https://oauth.yandex.ru/token',
@@ -57,4 +57,4 @@ export const authOptions: NextAuthOptions = {
 };
 
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST }; 
+export { handler as GET, handler as POST };
