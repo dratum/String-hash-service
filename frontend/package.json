@@ -13,7 +13,7 @@
   "keywords": [],
   "author": "Drachev G.A.",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
     "next": "^15.3.4",
     "react": "^19.1.0",
