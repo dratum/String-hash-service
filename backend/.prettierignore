@@ -1,0 +1,29 @@
+# Dependencies
+node_modules/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory
+coverage/
+
+# Environment files
+.env*
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# OS generated files
+.DS_Store
+Thumbs.db 
