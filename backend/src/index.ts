@@ -2,7 +2,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
 
-// Загружаем переменные окружения
 dotenv.config();
 
 const app = express();
@@ -41,9 +40,7 @@ app.use(
   (
     err: Error,
     req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
+    res: express.Response  ) => {
     console.error('Error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
