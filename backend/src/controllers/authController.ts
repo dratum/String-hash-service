@@ -9,11 +9,10 @@ export class AuthController {
         external_id,
         provider,
         email,
-        display_name,
-        avatar_url,
+        name,
         action,
         success,
-      } = req.body;
+      } = req.body;      
 
       // Получаем IP адрес и User-Agent
       const ip_address =
@@ -30,9 +29,8 @@ export class AuthController {
         const userData: User = {
           external_id,
           provider,
-          name: display_name,
+          name: name,
           email,
-          avatar_url,
           is_active: true,
         };
 
@@ -40,9 +38,8 @@ export class AuthController {
       } else {
         // Обновляем существующего пользователя
         const updateData: Partial<User> = {
-          name: display_name,
+          name: name,
           email,
-          avatar_url,
         };
 
         user = (await UserModel.update(user.id!, updateData)) || user;
@@ -103,15 +100,9 @@ export class AuthController {
 
   static async getAuthLogs(req: Request, res: Response): Promise<void> {
     try {
-      const { user_id, limit = 100 } = req.query;
+      const { limit = 100 } = req.query;
 
-      let logs: AuthLog[];
-
-      if (user_id) {
-        logs = await AuthLogModel.findByUserId(Number(user_id));
-      } else {
-        logs = await AuthLogModel.findRecent(Number(limit));
-      }
+      const logs = await AuthLogModel.findAllForAdmin(Number(limit));
 
       res.status(200).json({
         success: true,

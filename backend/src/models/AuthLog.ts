@@ -25,9 +25,25 @@ export class AuthLogModel {
     } = logData;
 
     const query = `
-      INSERT INTO auth_logs (user_id, action, provider, ip_address, user_agent, success, error_message)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)
-      RETURNING *
+                  INSERT INTO auth_logs (
+                    user_id
+                  , action
+                  , provider
+                  , ip_address
+                  , user_agent
+                  , success
+                  , error_message
+                  )
+                  VALUES (
+                    $1
+                  , $2
+                  , $3
+                  , $4
+                  , $5
+                  , $6
+                  , $7
+                  )
+                  RETURNING *
     `;
 
     const values = [
@@ -44,16 +60,14 @@ export class AuthLogModel {
     return result.rows[0];
   }
 
-  static async findByUserId(user_id: number): Promise<AuthLog[]> {
-    const query =
-      'SELECT * FROM auth_logs WHERE user_id = $1 ORDER BY created_at DESC';
-    const result = await pool.query(query, [user_id]);
-
-    return result.rows;
-  }
-
-  static async findRecent(limit: number = 100): Promise<AuthLog[]> {
-    const query = 'SELECT * FROM auth_logs ORDER BY created_at DESC LIMIT $1';
+  static async findAllForAdmin(limit: number = 100): Promise<AuthLog[]> {
+    const query = `
+      SELECT al.*, u.name as user_name, u.email as user_email 
+      FROM auth_logs al
+      LEFT JOIN users u ON al.user_id = u.id
+      ORDER BY al.created_at DESC 
+      LIMIT $1
+    `;
     const result = await pool.query(query, [limit]);
 
     return result.rows;
