@@ -1,5 +1,5 @@
-import React from 'react';
+import { redirect } from 'next/navigation';
 
-export default function Page() {
-    return <h1>Hello, Next.js!</h1>
-  }
+export default function HomePage() {
+  redirect('/login');
+}
