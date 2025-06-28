@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
             external_id: user.id,
             provider: 'yandex',
             email: user.email,
-            display_name: user.name,
+            name: user.name,
             action: 'login',
             success: true,
           }),
