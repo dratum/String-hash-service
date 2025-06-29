@@ -32,7 +32,7 @@ export default function HashForm() {
         setError(response.error || 'Ошибка хеширования');
       }
     } catch (err) {
-      console.error(err)
+      console.error(err);
       setError('Неизвестная ошибка %d');
     } finally {
       setLoading(false);

@@ -1,1 +1,1 @@
-export  type Algorithms = 'md5'|'sha1'|'sha256'
+export type Algorithms = 'md5' | 'sha1' | 'sha256';

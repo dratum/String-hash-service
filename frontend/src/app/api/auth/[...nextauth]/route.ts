@@ -82,7 +82,7 @@ import { handlers } from 'app/lib/auth';
 //     },
 //   },
 //   debug: true, // Включаем отладку для диагностики
-// }; 
+// };
 // export const handlers = NextAuth(authOptions);
 
-export {  handlers as GET, handlers as POST };
+export { handlers as GET, handlers as POST };

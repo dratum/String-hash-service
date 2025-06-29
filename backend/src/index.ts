@@ -38,16 +38,10 @@ app.get('/health', (req, res) => {
 });
 
 // Error handling middleware
-app.use(
-  (
-    err: Error,
-    req: express.Request,
-    res: express.Response,
-  ) => {
-    console.error('Error:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-);
+app.use((err: Error, req: express.Request, res: express.Response) => {
+  console.error('Error:', err);
+  res.status(500).json({ error: 'Internal server error' });
+});
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
