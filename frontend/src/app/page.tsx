@@ -80,7 +80,7 @@ export default function MainPage() {
                 onClick={() => setIsLogsModalOpen(true)}
                 className='px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors'
               >
-                Просмотр логов
+                Логи и история
               </button>
             </div>
           )}
