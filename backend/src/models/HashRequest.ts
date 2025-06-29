@@ -61,17 +61,20 @@ export class HashRequestModel {
       SELECT id FROM hash_algorithms 
       WHERE name = $1 AND is_active = true
     `;
-    
+
     const result = await pool.query(query, [algorithmName]);
-    
+
     if (result.rows.length === 0) {
       throw new Error(`Algorithm ${algorithmName} not found or inactive`);
     }
-    
+
     return result.rows[0].id;
   }
 
-  static async findByUserId(userId: number, limit: number = 50): Promise<HashHistoryItem[]> {
+  static async findByUserId(
+    userId: number,
+    limit: number = 50
+  ): Promise<HashHistoryItem[]> {
     const query = `
       SELECT 
         hr.id,
@@ -89,4 +92,4 @@ export class HashRequestModel {
     const result = await pool.query(query, [userId, limit]);
     return result.rows;
   }
-} 
+}

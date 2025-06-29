@@ -20,7 +20,7 @@ export class HashController {
       if (!input || typeof input !== 'string') {
         res.status(400).json({
           success: false,
-          error: 'Input string is required'
+          error: 'Input string is required',
         });
         return;
       }
@@ -28,7 +28,7 @@ export class HashController {
       if (!algorithm || !['md5', 'sha1', 'sha256'].includes(algorithm)) {
         res.status(400).json({
           success: false,
-          error: 'Valid algorithm (md5, sha1, sha256) is required'
+          error: 'Valid algorithm (md5, sha1, sha256) is required',
         });
         return;
       }
@@ -48,7 +48,7 @@ export class HashController {
         default:
           res.status(400).json({
             success: false,
-            error: 'Unsupported algorithm'
+            error: 'Unsupported algorithm',
           });
           return;
       }
@@ -61,7 +61,10 @@ export class HashController {
       }
 
       // Получаем IP адрес и User-Agent
-      const ipAddress = req.ip || req.connection.remoteAddress || (req.headers['x-forwarded-for'] as string);
+      const ipAddress =
+        req.ip ||
+        req.connection.remoteAddress ||
+        (req.headers['x-forwarded-for'] as string);
       const userAgent = req.headers['user-agent'];
 
       // Сохраняем запрос в базу данных для аудита
@@ -80,18 +83,18 @@ export class HashController {
         algorithm,
         input,
         hash,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
 
       res.status(200).json({
         success: true,
-        result
+        result,
       });
     } catch (error) {
       console.error('Error in hashString:', error);
       res.status(500).json({
         success: false,
-        error: 'Internal server error'
+        error: 'Internal server error',
       });
     }
   }
@@ -104,7 +107,7 @@ export class HashController {
       if (!userEmail) {
         res.status(401).json({
           success: false,
-          error: 'User email is required'
+          error: 'User email is required',
         });
         return;
       }
@@ -113,23 +116,26 @@ export class HashController {
       if (!user) {
         res.status(401).json({
           success: false,
-          error: 'User not found'
+          error: 'User not found',
         });
         return;
       }
 
-      const history = await HashRequestModel.findByUserId(user.id!, Number(limit));
+      const history = await HashRequestModel.findByUserId(
+        user.id!,
+        Number(limit)
+      );
 
       res.status(200).json({
         success: true,
-        history
+        history,
       });
     } catch (error) {
       console.error('Error in getHashHistory:', error);
       res.status(500).json({
         success: false,
-        error: 'Internal server error'
+        error: 'Internal server error',
       });
     }
   }
-} 
+}

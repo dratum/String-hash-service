@@ -6,14 +6,7 @@ import { UserRoleModel } from '../models/UserRole';
 export class AuthController {
   static async logAuth(req: Request, res: Response): Promise<void> {
     try {
-      const {
-        external_id,
-        provider,
-        email,
-        name,
-        action,
-        success,
-      } = req.body;      
+      const { external_id, provider, email, name, action, success } = req.body;
 
       // Получаем IP адрес и User-Agent
       const ip_address =
@@ -36,7 +29,7 @@ export class AuthController {
         };
 
         user = await UserModel.create(userData);
-        
+
         // Создаем роль пользователя по умолчанию
         await UserRoleModel.createDefaultRole(user.id!);
       } else {

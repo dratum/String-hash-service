@@ -63,11 +63,17 @@ export default function MainPage() {
                 <strong>Провайдер:</strong> Яндекс.ID
               </p>
               <p>
-                <strong>Роль:</strong> 
-                <span className={`ml-2 font-semibold ${
-                  session.user?.role === 'admin' ? 'text-blue-600' : 'text-gray-600'
-                }`}>
-                  {session.user?.role === 'admin' ? 'Администратор' : 'Пользователь'}
+                <strong>Роль:</strong>
+                <span
+                  className={`ml-2 font-semibold ${
+                    session.user?.role === 'admin'
+                      ? 'text-blue-600'
+                      : 'text-gray-600'
+                  }`}
+                >
+                  {session.user?.role === 'admin'
+                    ? 'Администратор'
+                    : 'Пользователь'}
                 </span>
               </p>
             </div>
@@ -92,9 +98,9 @@ export default function MainPage() {
         </div>
       </div>
 
-      <LogsModal 
-        isOpen={isLogsModalOpen} 
-        onClose={() => setIsLogsModalOpen(false)} 
+      <LogsModal
+        isOpen={isLogsModalOpen}
+        onClose={() => setIsLogsModalOpen(false)}
       />
     </div>
   );

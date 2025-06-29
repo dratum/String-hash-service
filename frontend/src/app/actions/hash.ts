@@ -28,7 +28,7 @@ export async function hashString(
 }> {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user) {
       return { success: false, error: 'Не авторизован' };
     }
@@ -56,9 +56,9 @@ export async function hashString(
     return { success: true, result: data.result };
   } catch (error) {
     console.error('Error hashing string:', error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Неизвестная ошибка' 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Неизвестная ошибка',
     };
   }
 }
@@ -70,7 +70,7 @@ export async function getHashHistory(): Promise<{
 }> {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user) {
       return { success: false, error: 'Не авторизован' };
     }
@@ -87,16 +87,19 @@ export async function getHashHistory(): Promise<{
 
     if (!response.ok) {
       const errorData = await response.json();
-      return { success: false, error: errorData.error || 'Ошибка получения истории' };
+      return {
+        success: false,
+        error: errorData.error || 'Ошибка получения истории',
+      };
     }
 
     const data = await response.json();
     return { success: true, history: data.history };
   } catch (error) {
     console.error('Error fetching hash history:', error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Неизвестная ошибка' 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Неизвестная ошибка',
     };
   }
-} 
+}

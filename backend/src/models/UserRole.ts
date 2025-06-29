@@ -20,7 +20,7 @@ export class UserRoleModel {
       JOIN roles r ON ur.role_id = r.id
       WHERE ur.user_id = $1
     `;
-    
+
     const result = await pool.query(query, [user_id]);
     return result.rows[0] || null;
   }
@@ -34,20 +34,20 @@ export class UserRoleModel {
     // Получаем ID роли 'user'
     const roleQuery = `SELECT id FROM roles WHERE name = 'user'`;
     const roleResult = await pool.query(roleQuery);
-    
+
     if (roleResult.rows.length === 0) {
       throw new Error('Role "user" not found in database');
     }
-    
+
     const roleId = roleResult.rows[0].id;
-    
+
     // Создаем связь пользователя с ролью
     const insertQuery = `
       INSERT INTO user_roles (user_id, role_id)
       VALUES ($1, $2)
       ON CONFLICT (user_id, role_id) DO NOTHING
     `;
-    
+
     await pool.query(insertQuery, [user_id, roleId]);
   }
-} 
+}

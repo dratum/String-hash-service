@@ -9,4 +9,4 @@ router.post('/', HashController.hashString);
 // GET /api/hash/history - Получение истории хеширования пользователя
 router.get('/history', HashController.getHashHistory);
 
-export default router; 
+export default router;

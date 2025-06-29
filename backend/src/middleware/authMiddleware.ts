@@ -20,14 +20,14 @@ export const requireAdmin = async (
 ): Promise<void> => {
   try {
     const userEmail = req.query.email as string;
-    
+
     if (!userEmail) {
       res.status(401).json({ error: 'Unauthorized - No user email provided' });
       return;
     }
 
     const user = await UserModel.findByEmail(userEmail);
-    
+
     if (!user) {
       res.status(401).json({ error: 'Unauthorized - User not found' });
       return;
@@ -35,7 +35,7 @@ export const requireAdmin = async (
 
     // Проверяем роль пользователя через таблицу user_role
     const isAdmin = await UserRoleModel.isAdmin(user.id!);
-    
+
     if (!isAdmin) {
       res.status(403).json({ error: 'Forbidden - Admin access required' });
       return;
@@ -47,11 +47,11 @@ export const requireAdmin = async (
       provider: user.provider,
       name: user.name,
       email: user.email,
-      role: 'admin'
+      role: 'admin',
     };
     next();
   } catch (error) {
     console.error('Auth middleware error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-}; 
+};

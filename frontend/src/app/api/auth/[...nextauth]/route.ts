@@ -35,22 +35,25 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user }) {
       // Отправка данных пользователя на backend для логирования
       try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/auth/log', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            external_id: user.id,
-            provider: 'yandex',
-            email: user.email,
-            name: user.name,
-            action: 'login',
-            success: true,
-          }),
-        });
+        const response = await fetch(
+          process.env.NEXT_PUBLIC_BACKEND_URL + '/api/auth/log',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              external_id: user.id,
+              provider: 'yandex',
+              email: user.email,
+              name: user.name,
+              action: 'login',
+              success: true,
+            }),
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
-          
+
           // Добавляем роль пользователя из backend
           if (data.user?.role) {
             user.role = data.user.role;

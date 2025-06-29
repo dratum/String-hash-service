@@ -24,14 +24,17 @@ export async function getAuthLogs(): Promise<{
 }> {
   try {
     const session = await getServerSession(authOptions);
-    
+
     if (!session?.user) {
       return { success: false, error: 'Не авторизован' };
     }
 
     // Проверяем роль пользователя из сессии
     if (session.user.role !== 'admin') {
-      return { success: false, error: 'Доступ запрещен. Требуются права администратора' };
+      return {
+        success: false,
+        error: 'Доступ запрещен. Требуются права администратора',
+      };
     }
 
     const response = await fetch(
@@ -46,16 +49,19 @@ export async function getAuthLogs(): Promise<{
 
     if (!response.ok) {
       const errorData = await response.json();
-      return { success: false, error: errorData.error || 'Ошибка получения логов' };
+      return {
+        success: false,
+        error: errorData.error || 'Ошибка получения логов',
+      };
     }
 
     const data = await response.json();
     return { success: true, logs: data.logs };
   } catch (error) {
     console.error('Error fetching auth logs:', error);
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : 'Неизвестная ошибка' 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Неизвестная ошибка',
     };
   }
 }

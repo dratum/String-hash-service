@@ -7,8 +7,8 @@ declare module 'next-auth' {
     external_id?: string;
     role?: string;
   }
-  
+
   interface Session {
     user: User;
   }
-} 
+}
