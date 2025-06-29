@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { hashString, HashResult } from '../actions/hash';
-import { Algorithms } from 'app/lib/algoritms';
+import { Algorithms } from 'app/lib/algorithms';
 
 export default function HashForm() {
   const [input, setInput] = useState('');

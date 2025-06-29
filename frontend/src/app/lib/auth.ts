@@ -1,5 +1,3 @@
-import NextAuth from 'next-auth';
-
 import { YandexProfile } from 'next-auth/providers/yandex';
 import type { NextAuthOptions } from 'next-auth';
 import { OAuthConfig } from 'next-auth/providers';
@@ -82,4 +80,3 @@ export const authOptions: NextAuthOptions = {
   },
   debug: true, // Включаем отладку для диагностики
 }; 
-export const { GET, POST } = NextAuth(authOptions);

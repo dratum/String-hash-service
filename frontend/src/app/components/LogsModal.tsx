@@ -157,7 +157,7 @@ export default function LogsModal({ isOpen, onClose }: LogsModalProps) {
                 </div>
               ) : !loading && !error ? (
                 <div className='text-center text-gray-500 py-8'>
-                  Нажмите "Обновить логи" для загрузки данных
+                  Нажмите &quot;Обновить логи&quot; для загрузки данных
                 </div>
               ) : null}
             </div>

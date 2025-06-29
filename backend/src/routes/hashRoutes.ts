@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { HashController } from '../controllers/hashController';
+import { HashController } from '../controllers/hashController.js';
 
 const router = Router();
 

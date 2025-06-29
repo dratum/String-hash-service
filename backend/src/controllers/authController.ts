@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { UserModel, User } from '../models/User';
-import { AuthLogModel, AuthLog } from '../models/AuthLog';
-import { UserRoleModel } from '../models/UserRole';
+import { UserModel, User } from '../models/User.js';
+import { AuthLogModel, AuthLog } from '../models/AuthLog.js';
+import { UserRoleModel } from '../models/UserRole.js';
 
 export class AuthController {
   static async logAuth(req: Request, res: Response): Promise<void> {

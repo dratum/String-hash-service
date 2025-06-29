@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import crypto from 'crypto';
 import { HashRequestModel, HashRequest } from '../models/HashRequest.js';
-import { UserModel } from '../models/User';
+import { UserModel } from '../models/User.js';
 
 export interface HashResult {
   algorithm: string;
