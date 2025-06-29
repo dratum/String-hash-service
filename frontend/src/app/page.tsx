@@ -4,6 +4,7 @@ import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import LogsModal from './components/LogsModal';
+import HashForm from './components/HashForm';
 
 export default function MainPage() {
   const { data: session, status } = useSession();
@@ -86,10 +87,7 @@ export default function MainPage() {
 
           <div className='bg-blue-50 rounded-lg p-6'>
             <h2 className='text-xl font-semibold mb-4'>Сервис хеширования</h2>
-            <p className='text-gray-600'>
-              Здесь будет интерфейс для хеширования строк с использованием
-              различных алгоритмов.
-            </p>
+            <HashForm />
           </div>
         </div>
       </div>

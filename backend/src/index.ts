@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes';
+import hashRoutes from './routes/hashRoutes';
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/hash', hashRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -40,7 +42,9 @@ app.use(
   (
     err: Error,
     req: express.Request,
-    res: express.Response  ) => {
+    res: express.Response,
+    next: express.NextFunction
+  ) => {
     console.error('Error:', err);
     res.status(500).json({ error: 'Internal server error' });
   }
