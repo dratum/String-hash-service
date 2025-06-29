@@ -11,7 +11,7 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./backend/sql:/docker-entrypoint-initdb.d
+      - ./backend/sql/database.sql:/docker-entrypoint-initdb.d/database.sql
     networks:
       - string_hash_network
 
@@ -46,9 +46,9 @@ services:
       NEXTAUTH_URL: http://localhost:3000
       NEXT_PUBLIC_BACKEND_URL: http://backend:3001
       # Добавьте свои переменные окружения для Яндекс.ID
-      # YANDEX_CLIENT_ID: 
-      # YANDEX_CLIENT_SECRET: 
-      # EXTAUTH_SECRET: 
+      YANDEX_CLIENT_ID: bf5ad230674c4e2799e7e8c5a99284ec
+      YANDEX_CLIENT_SECRET: f50866dc35b642fca86800fbb21ce69b
+      NEXTAUTH_SECRET: f50866dc35b642fca86800fbb21ce69b
     ports:
       - "3000:3000"
     depends_on:
