@@ -17,12 +17,6 @@ export default defineConfig([
   },
   tseslint.configs.recommended,
   {
-    files: ['**/*.json'],
-    plugins: { json },
-    language: 'json/json',
-    extends: ['json/recommended'],
-  },
-  {
     files: ['**/*.jsonc'],
     plugins: { json },
     language: 'json/jsonc',

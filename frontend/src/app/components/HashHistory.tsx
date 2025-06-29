@@ -21,6 +21,7 @@ export default function HashHistory() {
         setError(result.error || 'Ошибка получения истории');
       }
     } catch (err) {
+      console.error(err)
       setError('Неизвестная ошибка');
     } finally {
       setLoading(false);

@@ -30,6 +30,7 @@ export default function LogsModal({ isOpen, onClose }: LogsModalProps) {
         setError(result.error || 'Ошибка получения логов');
       }
     } catch (err) {
+      console.error(err)
       setError('Неизвестная ошибка');
     } finally {
       setLoading(false);
