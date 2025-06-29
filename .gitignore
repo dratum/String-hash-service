@@ -38,11 +38,6 @@ logs/
 # Тесты и покрытие
 coverage/
 
-# Lock-файлы (если не используются в репозитории)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
 # Служебные файлы
 *.swp
 *.tmp
