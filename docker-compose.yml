@@ -1,0 +1,65 @@
+services:
+  # PostgreSQL база данных
+  postgres:
+    image: postgres:17.5
+    container_name: string_hash_postgres
+    environment:
+      POSTGRES_DB: string_hash_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/sql:/docker-entrypoint-initdb.d
+    networks:
+      - string_hash_network
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: string_hash_backend
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: string_hash_service
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+    networks:
+      - string_hash_network
+    restart: unless-stopped
+
+  # Frontend приложение
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: string_hash_frontend
+    environment:
+      NEXTAUTH_URL: http://localhost:3000
+      NEXT_PUBLIC_BACKEND_URL: http://localhost:3001
+      # Добавьте свои переменные окружения для Яндекс.ID
+      YANDEX_CLIENT_ID: bf5ad230674c4e2799e7e8c5a99284ec
+      YANDEX_CLIENT_SECRET: f50866dc35b642fca86800fbb21ce69b
+      NEXTAUTH_SECRET: f50866dc35b642fca86800fbb21ce69b
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - string_hash_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  string_hash_network:
+    driver: bridge 
