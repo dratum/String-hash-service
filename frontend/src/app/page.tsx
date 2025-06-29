@@ -2,11 +2,13 @@
 
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import LogsModal from './components/LogsModal';
 
 export default function MainPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [isLogsModalOpen, setIsLogsModalOpen] = useState(false);
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -25,6 +27,9 @@ export default function MainPage() {
   if (!session) {
     return null;
   }
+
+  // Проверяем роль пользователя из сессии
+  const isAdmin = session.user?.role === 'admin';
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4'>
@@ -56,8 +61,28 @@ export default function MainPage() {
               <p>
                 <strong>Провайдер:</strong> Яндекс.ID
               </p>
+              <p>
+                <strong>Роль:</strong> 
+                <span className={`ml-2 font-semibold ${
+                  session.user?.role === 'admin' ? 'text-blue-600' : 'text-gray-600'
+                }`}>
+                  {session.user?.role === 'admin' ? 'Администратор' : 'Пользователь'}
+                </span>
+              </p>
             </div>
           </div>
+
+          {isAdmin && (
+            <div className='bg-yellow-50 rounded-lg p-6 mb-6'>
+              <h2 className='text-xl font-semibold mb-4'>Администрирование</h2>
+              <button
+                onClick={() => setIsLogsModalOpen(true)}
+                className='px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors'
+              >
+                Просмотр логов
+              </button>
+            </div>
+          )}
 
           <div className='bg-blue-50 rounded-lg p-6'>
             <h2 className='text-xl font-semibold mb-4'>Сервис хеширования</h2>
@@ -68,6 +93,11 @@ export default function MainPage() {
           </div>
         </div>
       </div>
+
+      <LogsModal 
+        isOpen={isLogsModalOpen} 
+        onClose={() => setIsLogsModalOpen(false)} 
+      />
     </div>
   );
 }

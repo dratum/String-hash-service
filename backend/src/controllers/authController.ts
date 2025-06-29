@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { UserModel, User } from '../models/User';
 import { AuthLogModel, AuthLog } from '../models/AuthLog';
+import { UserRoleModel } from '../models/UserRole';
 
 export class AuthController {
   static async logAuth(req: Request, res: Response): Promise<void> {
@@ -35,6 +36,9 @@ export class AuthController {
         };
 
         user = await UserModel.create(userData);
+        
+        // Создаем роль пользователя по умолчанию
+        await UserRoleModel.createDefaultRole(user.id!);
       } else {
         // Обновляем существующего пользователя
         const updateData: Partial<User> = {
@@ -44,6 +48,9 @@ export class AuthController {
 
         user = (await UserModel.update(user.id!, updateData)) || user;
       }
+
+      // Получаем роль пользователя
+      const userRole = await UserRoleModel.getUserRole(user.id!);
 
       // Создаем лог аутентификации
       const logData: AuthLog = {
@@ -66,6 +73,7 @@ export class AuthController {
           provider: user.provider,
           name: user.name,
           email: user.email,
+          role: userRole?.name || 'user',
         },
       });
     } catch (error) {

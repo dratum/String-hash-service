@@ -54,6 +54,16 @@ export class UserModel {
     return result.rows[0] || null;
   }
 
+  static async findByEmail(email: string): Promise<User | null> {
+    const query = `
+                  SELECT * FROM users
+                  WHERE email = $1
+    `;
+    const result = await pool.query(query, [email]);
+
+    return result.rows[0] || null;
+  }
+
   static async findById(id: number): Promise<User | null> {
     const query = `
                    SELECT * FROM users

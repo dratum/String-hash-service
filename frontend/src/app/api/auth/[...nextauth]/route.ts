@@ -35,7 +35,7 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user }) {
       // Отправка данных пользователя на backend для логирования
       try {
-        await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/auth/log', {
+        const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/auth/log', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -47,10 +47,33 @@ export const authOptions: NextAuthOptions = {
             success: true,
           }),
         });
+
+        if (response.ok) {
+          const data = await response.json();
+          
+          // Добавляем роль пользователя из backend
+          if (data.user?.role) {
+            user.role = data.user.role;
+          }
+        }
       } catch (e) {
         console.error('Error logging to backend:', e);
       }
       return true;
+    },
+    async session({ session, token }) {
+      // Добавляем роль в сессию
+      if (token.role) {
+        session.user.role = token.role as string;
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      // Сохраняем роль в JWT токене
+      if (user?.role) {
+        token.role = user.role;
+      }
+      return token;
     },
   },
   debug: true, // Включаем отладку для диагностики

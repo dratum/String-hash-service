@@ -19,20 +19,14 @@ export const requireAdmin = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const authHeader = req.headers.authorization;
+    const userEmail = req.query.email as string;
     
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      res.status(401).json({ error: 'Unauthorized - No token provided' });
+    if (!userEmail) {
+      res.status(401).json({ error: 'Unauthorized - No user email provided' });
       return;
     }
 
-    const token = authHeader.substring(7);
-    
-    // TODO: Добавить JWT декодирование и получение user_id из токена
-    // Пока что используем заглушку для проверки роли
-    
-    // Временная проверка - в реальном проекте нужно декодировать JWT
-    const user = await UserModel.findById(1); // Заглушка
+    const user = await UserModel.findByEmail(userEmail);
     
     if (!user) {
       res.status(401).json({ error: 'Unauthorized - User not found' });
