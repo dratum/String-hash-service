@@ -37,7 +37,7 @@ DB_PORT=5432
 ### 2. База данных
 
 1. Создайте базу данных PostgreSQL
-2. Выполните скрипт `backend/sql/database.sql`
+2. Выполните скрипт `backend/sql/database.sql` командой `psql -h localhost -U postgres -d string_hash_service -f backend/sql/database.sql`
 3. Добавьте пользователя с ролью админа:
    - Откройте `backend/sql/add_admin.sql`
    - Замените `YOUR_YANDEX_ID` на ваш ID из Яндекс.ID
